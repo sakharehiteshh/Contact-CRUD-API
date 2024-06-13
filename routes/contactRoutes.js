@@ -83,7 +83,6 @@ router.get('/contacts/search', async (req, res) => {
   });
 
     res.status(200).json(contactsWithLinks);
-    // res.render('imagepage',{items: contacts.image});
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -91,7 +90,7 @@ router.get('/contacts/search', async (req, res) => {
 
 router.put('/contacts/:id', upload.single('image'), async (req, res) => {
   try {
-    const contact = await updateContact(req.params.id, { ...req.body, image: req.file?.path });
+    const contact = await updateContact(req.params.id, { ...req.body, image: req.file?.path ||'default' });
     const response = _.omit(contact.toObject ? contact.toObject() : contact, ['image']); // Use lodash omit function to exclude 'image' field
     
     response.imagehref = {
@@ -120,7 +119,7 @@ router.get('/contact/:id/image', async (req, res) => {
 
         const contact = await getContact(req.params.id)
         const data = contact.image.data
-        res.setHeader('content-type', 'image/png');
+        res.setHeader('content-type', contact.image.contentType);
         res.send(data);
         } catch (error) {
         

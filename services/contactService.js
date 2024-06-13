@@ -63,11 +63,16 @@ const updateContact = async (contactId, data) => {
     if (existingContact) {
       throw new Error('Number Exists Already');
     }
-    const imageUpload = {
-      data: fs.readFileSync(path.join('D:','ContactListAPI',  image)),
-      contentType: 'image/png'
-    };
 
+    let imageUpload = null;
+
+    if(image !== 'default'){
+       imageUpload = {
+        data: fs.readFileSync(path.join(__dirname, '..',  image)),
+        contentType: 'image/png'
+      };
+  
+    }
     // Construct the update object with $set
     const updateObject = { $set: { name, phoneNumbers } };
     if (imageUpload) {
