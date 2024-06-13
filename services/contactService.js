@@ -24,7 +24,7 @@ const createContact = async (data) => {
 
   // Read and prepare the image for upload
   const imageUpload = {
-    data: fs.readFileSync(path.join('D:','ContactListAPI',  image)),
+    data: fs.readFileSync(path.join(__dirname, '..',  image)),
     contentType: 'image/png'
   };
 

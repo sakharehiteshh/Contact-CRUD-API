@@ -1,5 +1,4 @@
 const express = require('express');
-const Jimp = require("jimp");
 const multer = require('multer');
 const _ = require('lodash');
 const {
