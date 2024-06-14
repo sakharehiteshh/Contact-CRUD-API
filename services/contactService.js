@@ -19,7 +19,7 @@ const createContact = async (data) => {
   const validPhoneNumber = (phoneNumber) => /^[0-9]+$/.test(phoneNumber);
   for (const number of phoneNumbers) {
     if (!validPhoneNumber(number)) {
-      throw new Error('Phone number must be 10 digits long and contain only numbers');
+      throw new Error('Phone number must contain only numbers');
     }
   }
   // Check if the contact name already exists
@@ -70,7 +70,7 @@ const updateContact = async (contactId, data) => {
       throw new Error('Number Exists Already');
     }
 
-    const validPhoneNumber = (phoneNumber) => /^[0-9]{10}$/.test(phoneNumber);
+    const validPhoneNumber = (phoneNumber) => /^[0-9]+$/.test(phoneNumber);
       for (const number of phoneNumbers) {
           if (!validPhoneNumber(number)) {
             throw new Error('Phone number contain only numbers');
