@@ -16,6 +16,12 @@ const createContact = async (data) => {
     throw new Error('Number Exists Already');
   }
 
+  const validPhoneNumber = (phoneNumber) => /^[0-9]+$/.test(phoneNumber);
+  for (const number of phoneNumbers) {
+    if (!validPhoneNumber(number)) {
+      throw new Error('Phone number must be 10 digits long and contain only numbers');
+    }
+  }
   // Check if the contact name already exists
   const existingName = await Contact.findOne({ name });
   if (existingName){
@@ -62,6 +68,18 @@ const updateContact = async (contactId, data) => {
     const existingContact = await Contact.findOne({ phoneNumbers: { $in: phoneNumbers } });
     if (existingContact) {
       throw new Error('Number Exists Already');
+    }
+
+    const validPhoneNumber = (phoneNumber) => /^[0-9]{10}$/.test(phoneNumber);
+      for (const number of phoneNumbers) {
+          if (!validPhoneNumber(number)) {
+            throw new Error('Phone number contain only numbers');
+        }
+    }
+
+    const existingName = await Contact.findOne({ name, _id: { $ne: contactId } });
+      if (existingName) {
+        throw new Error('Contact Name Exists Already');
     }
 
     let imageUpload = null;
